@@ -8,7 +8,7 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineStaticParts do
   defp static_value({_tag, {_var, {:=, _meta, [_lhs, binary]}}}), do: binary
 
   @doc false
-  def handle_body({:safe, exprs}) do
+  def handle_body({:toplevel, exprs}) do
     merged = Merger.merge(exprs)
     assignments = Utils.variable_assignments(merged, 1, 1)
 

@@ -17,53 +17,59 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineScaffolding do
 
       use EEx.Engine
 
-      alias PhoenixUndeadView.EExEngine.Merger
+      alias PhoenixUndeadView.EExEngine.{Merger, Utils}
 
       @doc false
-      def init(_opts), do: {:safe, [""]}
+      def init(_opts), do: {:toplevel, [""]}
 
       @doc false
-      def handle_begin(_previous), do: {:safe, [""]}
+      def handle_begin(_previous), do: {:inner, [""]}
 
       @doc false
       # If possible, optimize the binaries in the list.
       # It produced cleaner results and might be a little faster at runtime.
-      def handle_end({:safe, list}) do
-        Merger.optimize_binaries(list)
+      def handle_end({:inner, list}) do
+        exprs = Merger.optimize_binaries(list)
+        Utils.inner_variable_assignments(exprs)
       end
 
       def handle_end(quoted), do: quoted
 
-      @doc false
-      # Required for Elixir < v1.5.1
-      def handle_text("", text) do
-        handle_text({:safe, ""}, text)
-      end
-
-      def handle_text({:safe, buffer}, text) do
+      def handle_text({:toplevel, buffer}, text) do
         quote do
           # FIXME:
           # Appending to the end of the list might make this quadratic.
-          {:safe, unquote(buffer ++ [text])}
+          {:toplevel, unquote(buffer ++ [text])}
         end
       end
 
-      @doc false
-      # Required for Elixir < v1.5.1
-      def handle_expr("", marker, expr) do
-        handle_expr({:safe, [""]}, marker, expr)
+      def handle_text({:inner, buffer}, text) do
+        quote do
+          # FIXME:
+          # Appending to the end of the list might make this quadratic.
+          {:inner, unquote(buffer ++ [text])}
+        end
       end
 
-      def handle_expr({:safe, buffer}, "=", expr) do
+      def handle_expr({:toplevel, buffer}, "=", expr) do
         line = line_from_expr(expr)
         expr = expr(expr)
 
         # FIXME:
         # Appending to the end of the list might make this quadratic.
-        {:safe, buffer ++ [to_safe(expr, line)]}
+        {:toplevel, buffer ++ [to_safe(expr, line)]}
       end
 
-      def handle_expr({:safe, buffer}, "", expr) do
+      def handle_expr({:inner, buffer}, "=", expr) do
+        line = line_from_expr(expr)
+        expr = expr(expr)
+
+        # FIXME:
+        # Appending to the end of the list might make this quadratic.
+        {:inner, buffer ++ [to_safe(expr, line)]}
+      end
+
+      def handle_expr({:toplevel, buffer}, "", expr) do
         expr = expr(expr)
 
         block_that_returns_nil =
@@ -74,7 +80,21 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineScaffolding do
 
         # FIXME:
         # Appending to the end of the list might make this quadratic.
-        {:safe, buffer ++ [block_that_returns_nil]}
+        {:toplevel, buffer ++ [block_that_returns_nil]}
+      end
+
+      def handle_expr({:inner, buffer}, "", expr) do
+        expr = expr(expr)
+
+        block_that_returns_nil =
+          quote do
+            unquote(expr)
+            nil
+          end
+
+        # FIXME:
+        # Appending to the end of the list might make this quadratic.
+        {:inner, buffer ++ [block_that_returns_nil]}
       end
 
       defp line_from_expr({_, meta, _}) when is_list(meta), do: Keyword.get(meta, :line)

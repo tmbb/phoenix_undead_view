@@ -22,10 +22,10 @@
                   [
                     [
                       safe:
-                        {:data, [generated: true, counter: -576_460_752_303_404_313],
+                        {:data, [generated: true, counter: -576_460_752_303_420_925],
                          PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                     ],
-                    {:data, [generated: true, counter: -576_460_752_303_404_313],
+                    {:data, [generated: true, counter: -576_460_752_303_420_925],
                      PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                   ]},
                  {:->, [generated: true],
@@ -33,7 +33,7 @@
                     [
                       {:when, [generated: true],
                        [
-                         {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                         {:bin, [generated: true, counter: -576_460_752_303_420_925],
                           PhoenixUndeadView.EExEngine.UndeadEngineScaffolding},
                          {:is_binary,
                           [
@@ -42,7 +42,7 @@
                             import: Kernel
                           ],
                           [
-                            {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                            {:bin, [generated: true, counter: -576_460_752_303_420_925],
                              PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                           ]}
                        ]}
@@ -53,14 +53,14 @@
                         :html_escape_to_iodata
                       ]}, [generated: true],
                      [
-                       {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                       {:bin, [generated: true, counter: -576_460_752_303_420_925],
                         PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                      ]}
                   ]},
                  {:->, [generated: true],
                   [
                     [
-                      {:other, [generated: true, counter: -576_460_752_303_404_313],
+                      {:other, [generated: true, counter: -576_460_752_303_420_925],
                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                     ],
                     {{:., [line: 3],
@@ -69,7 +69,7 @@
                         :to_iodata
                       ]}, [line: 3],
                      [
-                       {:other, [counter: -576_460_752_303_404_313, line: 3],
+                       {:other, [counter: -576_460_752_303_420_925, line: 3],
                         PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                      ]}
                   ]}
@@ -90,144 +90,178 @@
               [
                 {:>, [line: 5], [{:a, [line: 5], nil}, 1]},
                 [
-                  do: [
-                    "\n  ",
-                    {:case, [generated: true],
+                  do:
+                    {:__block__, [],
                      [
-                       {:+, [line: 6], [{:a, [line: 6], nil}, 1]},
-                       [
-                         do: [
-                           {:->, [generated: true],
-                            [
-                              [
-                                safe:
-                                  {:data, [generated: true, counter: -576_460_752_303_404_313],
-                                   PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                              ],
-                              {:data, [generated: true, counter: -576_460_752_303_404_313],
-                               PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                            ]},
-                           {:->, [generated: true],
-                            [
-                              [
-                                {:when, [generated: true],
-                                 [
-                                   {:bin, [generated: true, counter: -576_460_752_303_404_313],
-                                    PhoenixUndeadView.EExEngine.UndeadEngineScaffolding},
-                                   {:is_binary,
+                       {:=, [], [{:inner__1, [], PhoenixUndeadView.EExEngine.Utils}, "\n  "]},
+                       {:=, [],
+                        [
+                          {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
+                          {:case, [generated: true],
+                           [
+                             {:+, [line: 6], [{:a, [line: 6], nil}, 1]},
+                             [
+                               do: [
+                                 {:->, [generated: true],
+                                  [
                                     [
-                                      generated: true,
-                                      context:
-                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding,
-                                      import: Kernel
+                                      safe:
+                                        {:data,
+                                         [generated: true, counter: -576_460_752_303_420_925],
+                                         PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                                     ],
+                                    {:data, [generated: true, counter: -576_460_752_303_420_925],
+                                     PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                  ]},
+                                 {:->, [generated: true],
+                                  [
                                     [
-                                      {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                                      {:when, [generated: true],
+                                       [
+                                         {:bin,
+                                          [generated: true, counter: -576_460_752_303_420_925],
+                                          PhoenixUndeadView.EExEngine.UndeadEngineScaffolding},
+                                         {:is_binary,
+                                          [
+                                            generated: true,
+                                            context:
+                                              PhoenixUndeadView.EExEngine.UndeadEngineScaffolding,
+                                            import: Kernel
+                                          ],
+                                          [
+                                            {:bin,
+                                             [generated: true, counter: -576_460_752_303_420_925],
+                                             PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                          ]}
+                                       ]}
+                                    ],
+                                    {{:., [generated: true],
+                                      [
+                                        {:__aliases__, [generated: true, alias: false],
+                                         [:Plug, :HTML]},
+                                        :html_escape_to_iodata
+                                      ]}, [generated: true],
+                                     [
+                                       {:bin,
+                                        [generated: true, counter: -576_460_752_303_420_925],
+                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                     ]}
+                                  ]},
+                                 {:->, [generated: true],
+                                  [
+                                    [
+                                      {:other,
+                                       [generated: true, counter: -576_460_752_303_420_925],
                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                                    ]}
-                                 ]}
-                              ],
-                              {{:., [generated: true],
-                                [
-                                  {:__aliases__, [generated: true, alias: false], [:Plug, :HTML]},
-                                  :html_escape_to_iodata
-                                ]}, [generated: true],
-                               [
-                                 {:bin, [generated: true, counter: -576_460_752_303_404_313],
-                                  PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                               ]}
-                            ]},
-                           {:->, [generated: true],
-                            [
-                              [
-                                {:other, [generated: true, counter: -576_460_752_303_404_313],
-                                 PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                              ],
-                              {{:., [line: 6],
-                                [
-                                  {:__aliases__, [alias: false, line: 6],
-                                   [:Phoenix, :HTML, :Safe]},
-                                  :to_iodata
-                                ]}, [line: 6],
-                               [
-                                 {:other, [counter: -576_460_752_303_404_313, line: 6],
-                                  PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                               ]}
-                            ]}
-                         ]
+                                    ],
+                                    {{:., [line: 6],
+                                      [
+                                        {:__aliases__, [alias: false, line: 6],
+                                         [:Phoenix, :HTML, :Safe]},
+                                        :to_iodata
+                                      ]}, [line: 6],
+                                     [
+                                       {:other, [counter: -576_460_752_303_420_925, line: 6],
+                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                     ]}
+                                  ]}
+                               ]
+                             ]
+                           ]}
+                        ]},
+                       {:=, [], [{:inner__3, [], PhoenixUndeadView.EExEngine.Utils}, "\n"]},
+                       [
+                         {:inner__1, [], PhoenixUndeadView.EExEngine.Utils},
+                         {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
+                         {:inner__3, [], PhoenixUndeadView.EExEngine.Utils}
                        ]
                      ]},
-                    "\n"
-                  ],
-                  else: [
-                    "\n  ",
-                    {:case, [generated: true],
+                  else:
+                    {:__block__, [],
                      [
-                       {:-, [line: 8], [{:a, [line: 8], nil}, 1]},
-                       [
-                         do: [
-                           {:->, [generated: true],
-                            [
-                              [
-                                safe:
-                                  {:data, [generated: true, counter: -576_460_752_303_404_313],
-                                   PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                              ],
-                              {:data, [generated: true, counter: -576_460_752_303_404_313],
-                               PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                            ]},
-                           {:->, [generated: true],
-                            [
-                              [
-                                {:when, [generated: true],
-                                 [
-                                   {:bin, [generated: true, counter: -576_460_752_303_404_313],
-                                    PhoenixUndeadView.EExEngine.UndeadEngineScaffolding},
-                                   {:is_binary,
+                       {:=, [], [{:inner__1, [], PhoenixUndeadView.EExEngine.Utils}, "\n  "]},
+                       {:=, [],
+                        [
+                          {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
+                          {:case, [generated: true],
+                           [
+                             {:-, [line: 8], [{:a, [line: 8], nil}, 1]},
+                             [
+                               do: [
+                                 {:->, [generated: true],
+                                  [
                                     [
-                                      generated: true,
-                                      context:
-                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding,
-                                      import: Kernel
+                                      safe:
+                                        {:data,
+                                         [generated: true, counter: -576_460_752_303_420_925],
+                                         PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                                     ],
+                                    {:data, [generated: true, counter: -576_460_752_303_420_925],
+                                     PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                  ]},
+                                 {:->, [generated: true],
+                                  [
                                     [
-                                      {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                                      {:when, [generated: true],
+                                       [
+                                         {:bin,
+                                          [generated: true, counter: -576_460_752_303_420_925],
+                                          PhoenixUndeadView.EExEngine.UndeadEngineScaffolding},
+                                         {:is_binary,
+                                          [
+                                            generated: true,
+                                            context:
+                                              PhoenixUndeadView.EExEngine.UndeadEngineScaffolding,
+                                            import: Kernel
+                                          ],
+                                          [
+                                            {:bin,
+                                             [generated: true, counter: -576_460_752_303_420_925],
+                                             PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                          ]}
+                                       ]}
+                                    ],
+                                    {{:., [generated: true],
+                                      [
+                                        {:__aliases__, [generated: true, alias: false],
+                                         [:Plug, :HTML]},
+                                        :html_escape_to_iodata
+                                      ]}, [generated: true],
+                                     [
+                                       {:bin,
+                                        [generated: true, counter: -576_460_752_303_420_925],
+                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                     ]}
+                                  ]},
+                                 {:->, [generated: true],
+                                  [
+                                    [
+                                      {:other,
+                                       [generated: true, counter: -576_460_752_303_420_925],
                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                                    ]}
-                                 ]}
-                              ],
-                              {{:., [generated: true],
-                                [
-                                  {:__aliases__, [generated: true, alias: false], [:Plug, :HTML]},
-                                  :html_escape_to_iodata
-                                ]}, [generated: true],
-                               [
-                                 {:bin, [generated: true, counter: -576_460_752_303_404_313],
-                                  PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                               ]}
-                            ]},
-                           {:->, [generated: true],
-                            [
-                              [
-                                {:other, [generated: true, counter: -576_460_752_303_404_313],
-                                 PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                              ],
-                              {{:., [line: 8],
-                                [
-                                  {:__aliases__, [alias: false, line: 8],
-                                   [:Phoenix, :HTML, :Safe]},
-                                  :to_iodata
-                                ]}, [line: 8],
-                               [
-                                 {:other, [counter: -576_460_752_303_404_313, line: 8],
-                                  PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
-                               ]}
-                            ]}
-                         ]
+                                    ],
+                                    {{:., [line: 8],
+                                      [
+                                        {:__aliases__, [alias: false, line: 8],
+                                         [:Phoenix, :HTML, :Safe]},
+                                        :to_iodata
+                                      ]}, [line: 8],
+                                     [
+                                       {:other, [counter: -576_460_752_303_420_925, line: 8],
+                                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
+                                     ]}
+                                  ]}
+                               ]
+                             ]
+                           ]}
+                        ]},
+                       {:=, [], [{:inner__3, [], PhoenixUndeadView.EExEngine.Utils}, "\n"]},
+                       [
+                         {:inner__1, [], PhoenixUndeadView.EExEngine.Utils},
+                         {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
+                         {:inner__3, [], PhoenixUndeadView.EExEngine.Utils}
                        ]
-                     ]},
-                    "\n"
-                  ]
+                     ]}
                 ]
               ]},
              [
@@ -236,10 +270,10 @@
                   [
                     [
                       safe:
-                        {:data, [generated: true, counter: -576_460_752_303_404_313],
+                        {:data, [generated: true, counter: -576_460_752_303_420_925],
                          PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                     ],
-                    {:data, [generated: true, counter: -576_460_752_303_404_313],
+                    {:data, [generated: true, counter: -576_460_752_303_420_925],
                      PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                   ]},
                  {:->, [generated: true],
@@ -247,7 +281,7 @@
                     [
                       {:when, [generated: true],
                        [
-                         {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                         {:bin, [generated: true, counter: -576_460_752_303_420_925],
                           PhoenixUndeadView.EExEngine.UndeadEngineScaffolding},
                          {:is_binary,
                           [
@@ -256,7 +290,7 @@
                             import: Kernel
                           ],
                           [
-                            {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                            {:bin, [generated: true, counter: -576_460_752_303_420_925],
                              PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                           ]}
                        ]}
@@ -267,14 +301,14 @@
                         :html_escape_to_iodata
                       ]}, [generated: true],
                      [
-                       {:bin, [generated: true, counter: -576_460_752_303_404_313],
+                       {:bin, [generated: true, counter: -576_460_752_303_420_925],
                         PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                      ]}
                   ]},
                  {:->, [generated: true],
                   [
                     [
-                      {:other, [generated: true, counter: -576_460_752_303_404_313],
+                      {:other, [generated: true, counter: -576_460_752_303_420_925],
                        PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                     ],
                     {{:., [line: 5],
@@ -283,7 +317,7 @@
                         :to_iodata
                       ]}, [line: 5],
                      [
-                       {:other, [counter: -576_460_752_303_404_313, line: 5],
+                       {:other, [counter: -576_460_752_303_420_925, line: 5],
                         PhoenixUndeadView.EExEngine.UndeadEngineScaffolding}
                      ]}
                   ]}

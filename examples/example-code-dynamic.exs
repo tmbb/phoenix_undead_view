@@ -21,8 +21,9 @@
    dynamic__3 =
      case(
        if(a > 1) do
-         [
-           "\n  ",
+         inner__1 = "\n  "
+
+         inner__2 =
            case(a + 1) do
              {:safe, data} ->
                data
@@ -32,12 +33,14 @@
 
              other ->
                Phoenix.HTML.Safe.to_iodata(other)
-           end,
-           "\n"
-         ]
+           end
+
+         inner__3 = "\n"
+         [inner__1, inner__2, inner__3]
        else
-         [
-           "\n  ",
+         inner__1 = "\n  "
+
+         inner__2 =
            case(a - 1) do
              {:safe, data} ->
                data
@@ -47,9 +50,10 @@
 
              other ->
                Phoenix.HTML.Safe.to_iodata(other)
-           end,
-           "\n"
-         ]
+           end
+
+         inner__3 = "\n"
+         [inner__1, inner__2, inner__3]
        end
      ) do
        {:safe, data} ->

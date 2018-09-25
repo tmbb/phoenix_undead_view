@@ -3,7 +3,7 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineDynamicParts do
   alias PhoenixUndeadView.EExEngine.{Merger, Utils}
 
   @doc false
-  def handle_body({:safe, exprs}) do
+  def handle_body({:toplevel, exprs}) do
     merged = Merger.merge(exprs)
     assignments = Utils.variable_assignments(merged, 1, 1)
 
