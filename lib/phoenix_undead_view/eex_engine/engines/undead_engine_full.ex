@@ -1,10 +1,10 @@
 defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineFull do
-  use PhoenixUndeadView.EExEngine.UndeadEngineScaffolding
-  alias PhoenixUndeadView.EExEngine.{Merger, Utils}
+  use PhoenixUndeadView.EExEngine.UndeadEngine
+  alias PhoenixUndeadView.EExEngine.{Merger, Utils, Context}
 
   @doc false
-  def handle_body({:toplevel, exprs}) do
-    merged = Merger.merge(exprs)
+  def handle_body(%Context{} = context) do
+    merged = Merger.merge(context.buffer)
     assignments = Utils.variable_assignments(merged, 1, 1)
 
     all_assignments = Enum.map(assignments, fn {_tag, pair} -> pair end)
@@ -18,6 +18,6 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineFull do
         unquote(variables)
       end
 
-    {:safe, block}
+    Macro.expand({:safe, block}, context.env)
   end
 end

@@ -1,3 +1,9 @@
+defmodule F do
+  defmacro f(_x) do
+    "abc"
+  end
+end
+
 defmodule Fixtures do
   alias PhoenixUndeadView.EExEngine.Engines.{
     UndeadEngineFull,
@@ -32,6 +38,8 @@ defmodule Fixtures do
     {UndeadEngineDynamicParts, "dynamic"}
   ]
 
+  import F
+
   def example() do
     template = """
     <% a = 1 %>
@@ -39,6 +47,7 @@ defmodule Fixtures do
     <%= a %>
     Blah blah
     <%= if a > 1 do %>
+      <%= f(6) %>
       <%= a + 1 %>
     <% else %>
       <%= a - 1 %>
@@ -46,14 +55,7 @@ defmodule Fixtures do
     """
 
     for {engine, name} <- @engines do
-      compiled_undead =
-        template
-        |> EEx.compile_string(engine: engine)
-        |> Macro.expand(__ENV__)
-
-      # Ensure the template actually evaluates into something sensible without raising an error
-      # and inspect the evaluation result
-      Code.eval_quoted(compiled_undead, []) |> IO.inspect(label: name)
+      compiled_undead = EEx.compile_string(template, engine: engine, opts: [env: __ENV__])
 
       File.write!("examples/example-quoted-#{name}.exs", pp_quoted(compiled_undead))
       File.write!("examples/example-code-#{name}.exs", pp_as_code(compiled_undead))

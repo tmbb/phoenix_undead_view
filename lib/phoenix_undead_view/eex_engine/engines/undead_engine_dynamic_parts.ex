@@ -1,10 +1,10 @@
 defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineDynamicParts do
-  use PhoenixUndeadView.EExEngine.UndeadEngineScaffolding
-  alias PhoenixUndeadView.EExEngine.{Merger, Utils}
+  use PhoenixUndeadView.EExEngine.UndeadEngine
+  alias PhoenixUndeadView.EExEngine.{Merger, Utils, Context}
 
   @doc false
-  def handle_body({:toplevel, exprs}) do
-    merged = Merger.merge(exprs)
+  def handle_body(%Context{} = context) do
+    merged = Merger.merge(context.buffer)
     assignments = Utils.variable_assignments(merged, 1, 1)
 
     dynamic_assignments =
@@ -22,6 +22,7 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineDynamicParts do
         unquote(variables)
       end
 
-    {:safe, block}
+    IO.inspect(block == Macro.expand(block, context.env), label: "Macro.expand/2 has no effect")
+    {:safe, Macro.expand(block, context.env)}
   end
 end

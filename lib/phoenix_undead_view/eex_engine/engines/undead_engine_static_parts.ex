@@ -1,6 +1,6 @@
 defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineStaticParts do
-  use PhoenixUndeadView.EExEngine.UndeadEngineScaffolding
-  alias PhoenixUndeadView.EExEngine.{Merger, Utils}
+  use PhoenixUndeadView.EExEngine.UndeadEngine
+  alias PhoenixUndeadView.EExEngine.{Merger, Utils, Context}
 
   # FIXME:
   # Having to pattern match on the partial AST is very ugly.
@@ -8,8 +8,8 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineStaticParts do
   defp static_value({_tag, {_var, {:=, _meta, [_lhs, binary]}}}), do: binary
 
   @doc false
-  def handle_body({:toplevel, exprs}) do
-    merged = Merger.merge(exprs)
+  def handle_body(%Context{} = context) do
+    merged = Merger.merge(context.buffer)
     assignments = Utils.variable_assignments(merged, 1, 1)
 
     static_binaries =
