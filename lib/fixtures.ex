@@ -46,21 +46,37 @@ defmodule Fixtures do
 
   def example() do
     template = """
-    <% a = 1 %>
+    <% a = 2 %>
     Blah blah blah
     <%= a %>
     Blah blah
     <%= if a > 1 do %>
       <%= a + 1 %>
+      <%= if 3 > 1 do %>
+        <%= 1 + 5 %>
+      <% end %>
     <% else %>
       <%= a - 1 %>
     <% end %>\
     """
 
+    # template = """
+    # <% a = 2 %>
+    # Blah blah blah
+    # <%= a %>
+    # Blah blah
+    # <%= if a > 1 do %>
+    #   <%= a + 1 %>
+    # <% else %>
+    #   <%= a - 1 %>
+    # <% end %>\
+    # """
+
     for {engine, name} <- @engines do
       compiled_undead = EEx.compile_string(template, engine: engine, opts: [env: __ENV__])
 
-      Code.eval_quoted(compiled_undead, [])
+      {val, _} = Code.eval_quoted(compiled_undead, [])
+      IO.inspect(val, label: name)
 
       File.write!("examples/example-quoted-#{name}.exs", pp_quoted(compiled_undead))
       File.write!("examples/example-code-#{name}.exs", pp_as_code(compiled_undead))

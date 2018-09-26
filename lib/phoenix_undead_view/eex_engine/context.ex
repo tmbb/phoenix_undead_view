@@ -4,7 +4,7 @@ defmodule PhoenixUndeadView.EExEngine.Context do
   defstruct [
     env: nil,
     buffer: [""],
-    type: nil
+    level: 0
   ]
 
   def new(opts) do
@@ -12,18 +12,14 @@ defmodule PhoenixUndeadView.EExEngine.Context do
   end
 
   def new_toplevel(opts) when is_list(opts) do
-    struct(__MODULE__, Keyword.merge(opts, [type: :toplevel]))
+    struct(__MODULE__, Keyword.merge(opts, [level: 0]))
   end
 
-  def new_inner(opts) when is_list(opts) do
-    struct(__MODULE__, Keyword.merge(opts, [type: :inner]))
+  def move_to_next_level(%Context{level: level} = context) do
+    %{context | buffer: [""], level: level + 1}
   end
 
   def append_to_buffer(%Context{buffer: buffer} = context, value) do
     %{context | buffer: buffer ++ [value]}
-  end
-
-  def replace_buffer(%Context{} = context, value) do
-    %{context | buffer: value}
   end
 end

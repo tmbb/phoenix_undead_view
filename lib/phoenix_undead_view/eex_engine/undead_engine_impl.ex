@@ -22,22 +22,22 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
 
   @doc false
   def handle_begin(%Context{} = context) do
-    Context.new_inner(env: context.env)
+    Context.move_to_next_level(context)
   end
 
   @doc false
   # If possible, optimize the binaries in the list.
   # It produced cleaner results and might be a little faster at runtime.
-  def handle_end(%Context{buffer: exprs, type: :inner} = _context) do
+  def handle_end(%Context{buffer: exprs, level: level} = _context) when level > 0 do
     new_exprs =
       exprs
       |> Merger.optimize_binaries()
-      |> Utils.inner_variable_assignments()
+      |> Utils.inner_variable_assignments(level)
 
     new_exprs
   end
 
-  def handle_end(%Context{type: :toplevel} = context), do: context
+  def handle_end(%Context{level: 0} = context), do: context
 
   def handle_text(%Context{} = context, text) do
     Context.append_to_buffer(context, text)
@@ -46,6 +46,7 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
   def handle_expr(%Context{} = context, "=", expr) do
     line = line_from_expr(expr)
     expr = expr(expr)
+
     Context.append_to_buffer(context, to_safe(expr, line))
   end
 

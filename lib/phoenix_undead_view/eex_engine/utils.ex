@@ -1,6 +1,9 @@
 defmodule PhoenixUndeadView.EExEngine.Utils do
   @moduledoc false
 
+  alias PhoenixUndeadView.EExEngine.Context
+
+  # Currently unused
   def macroexpand(ast, env) do
     Macro.prewalk(ast, fn node -> Macro.expand(node, env) end)
   end
@@ -31,24 +34,30 @@ defmodule PhoenixUndeadView.EExEngine.Utils do
 
   def variable_assignments([], _static_index, _dynamic_index), do: []
 
-  def handle_inner_expression(static) when is_binary(static) do
+  def handle_inner_expression(static, _level) when is_binary(static) do
     static
   end
 
-  def handle_inner_expression({:inner, list}) do
-    block = inner_variable_assignments(list)
+  def handle_inner_expression({:inner, list}, level) when is_list(list) do
+    block = inner_variable_assignments(list, level)
     {:safe, block}
   end
 
-  def handle_inner_expression(expr), do: expr
+  def handle_inner_expression(expr, _level) do
+    expr
+  end
 
-  def inner_variable_assignments(exprs) do
+  def inner_variable_assignments(exprs, level) do
+    if level == 0 do
+      raise "level can't be 0 (zero!)"
+    end
+
     assignments =
       for {expr, index} <- Enum.with_index(exprs, 1) do
-        var_name = String.to_atom("inner__#{index}")
+        var_name = String.to_atom("inner__#{level}__#{index}")
         var = Macro.var(var_name, __MODULE__)
 
-        processed_expr = handle_inner_expression(expr)
+        processed_expr = handle_inner_expression(expr, level)
 
         quoted =
           quote do
