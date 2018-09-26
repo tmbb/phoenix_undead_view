@@ -87,7 +87,7 @@
                           {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
                           {:case, [generated: true],
                            [
-                             {:f, [line: 6], [6]},
+                             {:+, [line: 6], [{:a, [line: 6], nil}, 1]},
                              [
                                do: [
                                  {:->, [generated: true],
@@ -151,83 +151,11 @@
                              ]
                            ]}
                         ]},
-                       {:=, [], [{:inner__3, [], PhoenixUndeadView.EExEngine.Utils}, "\n  "]},
-                       {:=, [],
-                        [
-                          {:inner__4, [], PhoenixUndeadView.EExEngine.Utils},
-                          {:case, [generated: true],
-                           [
-                             {:+, [line: 7], [{:a, [line: 7], nil}, 1]},
-                             [
-                               do: [
-                                 {:->, [generated: true],
-                                  [
-                                    [
-                                      safe:
-                                        {:data, [generated: true],
-                                         PhoenixUndeadView.EExEngine.UndeadEngineImpl}
-                                    ],
-                                    {:data, [generated: true],
-                                     PhoenixUndeadView.EExEngine.UndeadEngineImpl}
-                                  ]},
-                                 {:->, [generated: true],
-                                  [
-                                    [
-                                      {:when, [generated: true],
-                                       [
-                                         {:bin, [generated: true],
-                                          PhoenixUndeadView.EExEngine.UndeadEngineImpl},
-                                         {:is_binary,
-                                          [
-                                            generated: true,
-                                            context: PhoenixUndeadView.EExEngine.UndeadEngineImpl,
-                                            import: Kernel
-                                          ],
-                                          [
-                                            {:bin, [generated: true],
-                                             PhoenixUndeadView.EExEngine.UndeadEngineImpl}
-                                          ]}
-                                       ]}
-                                    ],
-                                    {{:., [generated: true],
-                                      [
-                                        {:__aliases__, [generated: true, alias: false],
-                                         [:Plug, :HTML]},
-                                        :html_escape_to_iodata
-                                      ]}, [generated: true],
-                                     [
-                                       {:bin, [generated: true],
-                                        PhoenixUndeadView.EExEngine.UndeadEngineImpl}
-                                     ]}
-                                  ]},
-                                 {:->, [generated: true],
-                                  [
-                                    [
-                                      {:other, [generated: true],
-                                       PhoenixUndeadView.EExEngine.UndeadEngineImpl}
-                                    ],
-                                    {{:., [line: 7],
-                                      [
-                                        {:__aliases__, [line: 7, alias: false],
-                                         [:Phoenix, :HTML, :Safe]},
-                                        :to_iodata
-                                      ]}, [line: 7],
-                                     [
-                                       {:other, [line: 7],
-                                        PhoenixUndeadView.EExEngine.UndeadEngineImpl}
-                                     ]}
-                                  ]}
-                               ]
-                             ]
-                           ]}
-                        ]},
-                       {:=, [], [{:inner__5, [], PhoenixUndeadView.EExEngine.Utils}, "\n"]},
+                       {:=, [], [{:inner__3, [], PhoenixUndeadView.EExEngine.Utils}, "\n"]},
                        [
                          {:inner__1, [], PhoenixUndeadView.EExEngine.Utils},
                          {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
-                         {:inner__3, [], PhoenixUndeadView.EExEngine.Utils},
-                         {:inner__4, [], PhoenixUndeadView.EExEngine.Utils},
-                         {:inner__5, [], PhoenixUndeadView.EExEngine.Utils}
+                         {:inner__3, [], PhoenixUndeadView.EExEngine.Utils}
                        ]
                      ]},
                   else:
@@ -239,7 +167,7 @@
                           {:inner__2, [], PhoenixUndeadView.EExEngine.Utils},
                           {:case, [generated: true],
                            [
-                             {:-, [line: 9], [{:a, [line: 9], nil}, 1]},
+                             {:-, [line: 8], [{:a, [line: 8], nil}, 1]},
                              [
                                do: [
                                  {:->, [generated: true],
@@ -288,14 +216,14 @@
                                       {:other, [generated: true],
                                        PhoenixUndeadView.EExEngine.UndeadEngineImpl}
                                     ],
-                                    {{:., [line: 9],
+                                    {{:., [line: 8],
                                       [
-                                        {:__aliases__, [line: 9, alias: false],
+                                        {:__aliases__, [line: 8, alias: false],
                                          [:Phoenix, :HTML, :Safe]},
                                         :to_iodata
-                                      ]}, [line: 9],
+                                      ]}, [line: 8],
                                      [
-                                       {:other, [line: 9],
+                                       {:other, [line: 8],
                                         PhoenixUndeadView.EExEngine.UndeadEngineImpl}
                                      ]}
                                   ]}

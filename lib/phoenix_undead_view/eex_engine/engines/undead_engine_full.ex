@@ -18,6 +18,6 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineFull do
         unquote(variables)
       end
 
-    Macro.expand({:safe, block}, context.env)
+    {:safe, block}
   end
 end

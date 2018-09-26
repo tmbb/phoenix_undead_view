@@ -22,7 +22,6 @@ defmodule PhoenixUndeadView.EExEngine.Engines.UndeadEngineDynamicParts do
         unquote(variables)
       end
 
-    IO.inspect(block == Macro.expand(block, context.env), label: "Macro.expand/2 has no effect")
-    {:safe, Macro.expand(block, context.env)}
+    {:safe, block}
   end
 end

@@ -1,6 +1,10 @@
 defmodule PhoenixUndeadView.EExEngine.Utils do
   @moduledoc false
 
+  def macroexpand(ast, env) do
+    Macro.prewalk(ast, fn node -> Macro.expand(node, env) end)
+  end
+
   def variable_assignments([expr | exprs], static_index, dynamic_index) when is_binary(expr) do
     var_name = String.to_atom("static__#{static_index}")
     var = Macro.var(var_name, __MODULE__)

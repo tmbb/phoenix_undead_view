@@ -1,6 +1,12 @@
 defmodule F do
   defmacro f(_x) do
-    "abc"
+    quote do
+      {:safe,
+      (
+        dyn
+        ["\n", dyn, "\n"]
+      )}
+    end
   end
 end
 
@@ -38,8 +44,6 @@ defmodule Fixtures do
     {UndeadEngineDynamicParts, "dynamic"}
   ]
 
-  import F
-
   def example() do
     template = """
     <% a = 1 %>
@@ -47,7 +51,6 @@ defmodule Fixtures do
     <%= a %>
     Blah blah
     <%= if a > 1 do %>
-      <%= f(6) %>
       <%= a + 1 %>
     <% else %>
       <%= a - 1 %>
@@ -56,6 +59,8 @@ defmodule Fixtures do
 
     for {engine, name} <- @engines do
       compiled_undead = EEx.compile_string(template, engine: engine, opts: [env: __ENV__])
+
+      Code.eval_quoted(compiled_undead, [])
 
       File.write!("examples/example-quoted-#{name}.exs", pp_quoted(compiled_undead))
       File.write!("examples/example-code-#{name}.exs", pp_as_code(compiled_undead))
