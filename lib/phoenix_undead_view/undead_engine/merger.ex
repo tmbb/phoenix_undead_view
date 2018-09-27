@@ -1,4 +1,4 @@
-defmodule PhoenixUndeadView.EExEngine.Merger do
+defmodule PhoenixUndeadView.UndeadEngine.Merger do
   @moduledoc false
 
   defguard is_static(expr) when is_binary(expr)

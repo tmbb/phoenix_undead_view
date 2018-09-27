@@ -1,4 +1,4 @@
-defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
+defmodule PhoenixUndeadView.UndeadEngine do
   @moduledoc false
 
   # The code was shamelessly stolen from the `phoenix_html` package with only minor modifications.
@@ -11,7 +11,7 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
 
   use EEx.Engine
 
-  alias PhoenixUndeadView.EExEngine.{Merger, Utils, Context}
+  alias PhoenixUndeadView.UndeadEngine.{Merger, Utils, Context}
 
   @doc false
   def init(opts) do
@@ -28,7 +28,8 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
   @doc false
   # If possible, optimize the binaries in the list.
   # It produced cleaner results and might be a little faster at runtime.
-  def handle_end(%Context{buffer: exprs, level: level} = _context) when level > 0 do
+  def handle_end(%Context{level: level} = context) when level > 0 do
+    %{buffer: exprs} = Context.reverse_buffer(context)
     new_exprs =
       exprs
       |> Merger.optimize_binaries()
@@ -37,17 +38,41 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
     new_exprs
   end
 
-  def handle_end(%Context{level: 0} = context), do: context
+  def handle_end(%Context{level: 0} = context), do: Context.reverse_buffer(context)
+
+  @doc false
+  def handle_body(%Context{} = context) do
+    %{buffer: buffer} = Context.reverse_buffer(context)
+    merged = Merger.merge(buffer)
+    assignments = Utils.variable_assignments(merged, 1, 1)
+
+    dynamic_expressions =
+      assignments
+      |> Enum.filter(&is_dynamic/1)
+      |> Enum.map(&expression/1)
+
+    result = Enum.map(assignments, &variable_or_value/1)
+
+    block =
+      quote do
+        # Assign the variables so that scoping rules are respected
+        unquote_splicing(dynamic_expressions)
+        # return the list of expressions
+        {:safe, unquote(result)}
+      end
+
+    block
+  end
 
   def handle_text(%Context{} = context, text) do
-    Context.append_to_buffer(context, text)
+    Context.prepend_to_buffer(context, text)
   end
 
   def handle_expr(%Context{} = context, "=", expr) do
     line = line_from_expr(expr)
     expr = expr(expr)
 
-    Context.append_to_buffer(context, to_safe(expr, line))
+    Context.prepend_to_buffer(context, to_safe(expr, line))
   end
 
   def handle_expr(%Context{} = context, "", expr) do
@@ -59,7 +84,7 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
         ""
       end
 
-    Context.append_to_buffer(context, block)
+    Context.prepend_to_buffer(context, block)
   end
 
   defp line_from_expr({_, meta, _}) when is_list(meta), do: Keyword.get(meta, :line)
@@ -123,4 +148,16 @@ defmodule PhoenixUndeadView.EExEngine.UndeadEngineImpl do
           """
     end
   end
+
+  defp is_dynamic({:dynamic, _}), do: true
+
+  defp is_dynamic(_), do: false
+
+  defp expression({tag, {_var, _val, quoted}}) when tag in [:static, :dynamic] do
+    quoted
+  end
+
+  defp variable_or_value({:dynamic, {var, _val, _quoted}}), do: var
+
+  defp variable_or_value({:static, {_var, binary, _quoted}}), do: binary
 end

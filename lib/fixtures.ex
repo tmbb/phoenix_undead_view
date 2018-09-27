@@ -1,22 +1,5 @@
-defmodule F do
-  defmacro f(_x) do
-    quote do
-      {:safe,
-      (
-        dyn
-        ["\n", dyn, "\n"]
-      )}
-    end
-  end
-end
-
 defmodule Fixtures do
-  alias PhoenixUndeadView.EExEngine.Engines.{
-    UndeadEngineFull,
-    UndeadEngineDynamicParts,
-    UndeadEngineStaticPartsUnoptimized,
-    UndeadEngineStaticParts
-  }
+  alias PhoenixUndeadView.UndeadEEx
 
   @limit 100_000_000
 
@@ -37,13 +20,6 @@ defmodule Fixtures do
     |> Code.format_string!()
   end
 
-  @engines [
-    {UndeadEngineFull, "full"},
-    {UndeadEngineStaticParts, "static"},
-    {UndeadEngineStaticPartsUnoptimized, "static.unoptimized"},
-    {UndeadEngineDynamicParts, "dynamic"}
-  ]
-
   def example() do
     template = """
     <% a = 2 %>
@@ -60,26 +36,21 @@ defmodule Fixtures do
     <% end %>\
     """
 
-    # template = """
-    # <% a = 2 %>
-    # Blah blah blah
-    # <%= a %>
-    # Blah blah
-    # <%= if a > 1 do %>
-    #   <%= a + 1 %>
-    # <% else %>
-    #   <%= a - 1 %>
-    # <% end %>\
-    # """
+    undead_template = UndeadEEx.compile_string(template, env: __ENV__)
 
-    for {engine, name} <- @engines do
-      compiled_undead = EEx.compile_string(template, engine: engine, opts: [env: __ENV__])
+    templates = [
+      {undead_template.full, "full"},
+      {undead_template.static, "static"},
+      {undead_template.dynamic, "dynamic"}
+    ]
 
-      {val, _} = Code.eval_quoted(compiled_undead, [])
-      IO.inspect(val, label: name)
-
-      File.write!("examples/example-quoted-#{name}.exs", pp_quoted(compiled_undead))
-      File.write!("examples/example-code-#{name}.exs", pp_as_code(compiled_undead))
+    for {quoted, name} <- templates do
+      File.write!("examples/quoted/example-#{name}.exs", pp_quoted(quoted))
+      File.write!("examples/code/example-#{name}.exs", pp_as_code(quoted))
+      {iodata, _} = Code.eval_quoted(quoted, [])
+      IO.inspect(iodata, label: name)
     end
+
+    :ok
   end
 end
