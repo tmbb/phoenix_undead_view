@@ -19,41 +19,6 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     [acc]
   end
 
-  def segment_to_group(segment) do
-    group_type = group_type_for(segment)
-    {group_type, [], [segment]}
-  end
-
-  defp group_type_for({segment_type, _meta, _contents}) do
-    case segment_type do
-      UndeadEngine.Segment.Dynamic -> UndeadEngine.Group.Dynamic
-      UndeadEngine.Segment.DynamicNoResult -> UndeadEngine.Group.DynamicNoResult
-      UndeadEngine.Segment.Static -> UndeadEngine.Group.Fixed
-      UndeadEngine.Segment.Fixed -> UndeadEngine.Group.Fixed
-    end
-  end
-
-  def group_adjacent_segments([]), do: []
-
-  def group_adjacent_segments([s | rest]),
-    do: group_adjacent_segments_helper(segment_to_group(s), rest)
-
-  def group_adjacent_segments_helper(
-        {group_type, meta, segments} = _current_group,
-        [current_segment | next_segments]
-      ) do
-    if group_type_for(current_segment) == group_type do
-      new_group_segments = [current_segment | segments]
-      new_current_group = {group_type, meta, new_group_segments}
-      group_adjacent_segments_helper(new_current_group, next_segments)
-    else
-      reversed_group_segments = :lists.reverse(segments)
-      reversed_current_group = {group_type, meta, reversed_group_segments}
-      next_group = segment_to_group(current_segment)
-      [reversed_current_group | group_adjacent_segments_helper(next_group, next_segments)]
-    end
-  end
-
   def optimize_inside_undead_template(
         {UndeadEngine.Segment.UndeadTemplate, {_segments, _meta}} = segment
       ) do
@@ -123,4 +88,43 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     expanded = macroexpand_template(template, env)
     optimize_expr(expanded)
   end
+
+  # # -------------------------------------------------------------
+  # # Groups have been commented out because they're not needed yet
+  # # -------------------------------------------------------------
+  #
+  # def segment_to_group(segment) do
+  #   group_type = group_type_for(segment)
+  #   {group_type, [], [segment]}
+  # end
+  #
+  # defp group_type_for({segment_type, _meta, _contents}) do
+  #   case segment_type do
+  #     UndeadEngine.Segment.Dynamic -> UndeadEngine.Group.Dynamic
+  #     UndeadEngine.Segment.DynamicNoResult -> UndeadEngine.Group.DynamicNoResult
+  #     UndeadEngine.Segment.Static -> UndeadEngine.Group.Fixed
+  #     UndeadEngine.Segment.Fixed -> UndeadEngine.Group.Fixed
+  #   end
+  # end
+
+  # def group_adjacent_segments([]), do: []
+
+  # def group_adjacent_segments([s | rest]),
+  #   do: group_adjacent_segments_helper(segment_to_group(s), rest)
+
+  # def group_adjacent_segments_helper(
+  #       {group_type, meta, segments} = _current_group,
+  #       [current_segment | next_segments]
+  #     ) do
+  #   if group_type_for(current_segment) == group_type do
+  #     new_group_segments = [current_segment | segments]
+  #     new_current_group = {group_type, meta, new_group_segments}
+  #     group_adjacent_segments_helper(new_current_group, next_segments)
+  #   else
+  #     reversed_group_segments = :lists.reverse(segments)
+  #     reversed_current_group = {group_type, meta, reversed_group_segments}
+  #     next_group = segment_to_group(current_segment)
+  #     [reversed_current_group | group_adjacent_segments_helper(next_group, next_segments)]
+  #   end
+  # end
 end
