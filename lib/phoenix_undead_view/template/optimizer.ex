@@ -1,4 +1,7 @@
 defmodule PhoenixUndeadView.Template.Optimizer do
+  # This module doesn't do anything particularly complex.
+  # It just applies some simple rules recursively on the nested templates.
+
   def merge_segments([]), do: []
 
   def merge_segments([s | rest]), do: merge_segments_helper(s, rest)
@@ -33,6 +36,8 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     optimize_expr(expr)
   end
 
+  # TODO:
+  # Try to replace this recursive implementation with somthing that uses `Macro.prewalk/2`.
   def optimize_expr(
         {outer_tag, {{inner_tag, {_segments, _inner_meta}} = undead_template, _outer_meta}}
       )
