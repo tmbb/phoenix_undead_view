@@ -1,5 +1,9 @@
 defmodule Fixtures do
-  alias PhoenixUndeadView.UndeadEEx
+  alias PhoenixUndeadView.Template.UndeadEEx
+  import PhoenixUndeadView.Template.Widgets.Tag
+  require EEx
+
+  _no_warning = tag(:x, [])
 
   @limit 100_000_000
 
@@ -20,36 +24,30 @@ defmodule Fixtures do
     |> Code.format_string!()
   end
 
+  defmacro f(x) do
+    x
+  end
+
   def example() do
     template = """
     <% a = 2 %>
     Blah blah blah
+
+    <%= tag(:input, [name: "user[name]", id: "user_name", value: @user.name]) %>
+
     <%= a %>
+
     Blah blah
-    <%= if a > 1 do %>
-      <%= a + 1 %>
-      <%= if 3 > 1 do %>
-        <%= 1 + 5 %>
-      <% end %>
-    <% else %>
-      <%= a - 1 %>
-    <% end %>\
     """
 
     undead_template = UndeadEEx.compile_string(template, env: __ENV__)
+    expr = undead_template.raw
+    File.write!("examples/quoted/example-raw.exs", pp_quoted(expr))
+    File.write!("examples/code/example-raw.exs", pp_as_code(expr))
 
-    templates = [
-      {undead_template.full, "full"},
-      {undead_template.static, "static"},
-      {undead_template.dynamic, "dynamic"}
-    ]
-
-    for {quoted, name} <- templates do
-      File.write!("examples/quoted/example-#{name}.exs", pp_quoted(quoted))
-      File.write!("examples/code/example-#{name}.exs", pp_as_code(quoted))
-      {iodata, _} = Code.eval_quoted(quoted, [])
-      IO.inspect(iodata, label: name)
-    end
+    optimized = undead_template.full
+    File.write!("examples/quoted/example-optimized.exs", pp_quoted(optimized))
+    File.write!("examples/code/example-optimized.exs", pp_as_code(optimized))
 
     :ok
   end
