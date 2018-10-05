@@ -6,7 +6,7 @@
      {tag(:input,
         name: "user[name]",
         id: "user_name",
-        value: __MODULE__.fetch_assign(var!(assigns), :user).name()
+        value: fetch_assign(var!(assigns), :user).name()
       ), [line: 4]}},
     {UndeadEngine.Segment.Static, {"\n\n", []}},
     {UndeadEngine.Segment.Dynamic, {a, [line: 6]}},

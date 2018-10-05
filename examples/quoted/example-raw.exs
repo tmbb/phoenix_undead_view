@@ -13,11 +13,7 @@
            value:
              {{:., [line: 4],
                [
-                 {{:., [line: 4],
-                   [
-                     {:__MODULE__, [line: 4], PhoenixUndeadView.Template.UndeadEngine},
-                     :fetch_assign
-                   ]}, [line: 4],
+                 {:fetch_assign, [line: 4],
                   [
                     {:var!,
                      [line: 4, context: PhoenixUndeadView.Template.UndeadEngine, import: Kernel],

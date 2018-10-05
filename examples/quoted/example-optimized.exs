@@ -8,11 +8,8 @@
      {{{:., [], [PhoenixUndeadView.Template.HTML, :html_escape]}, [],
        [
          {{:., [line: 4],
-           [
-             {{:., [line: 4], [Fixtures, :fetch_assign]}, [line: 4],
-              [{:assigns, [line: 4, var: true], nil}, :user]},
-             :name
-           ]}, [line: 4], []}
+           [{:fetch_assign, [line: 4], [{:assigns, [line: 4, var: true], nil}, :user]}, :name]},
+          [line: 4], []}
        ]}, []}},
     {UndeadEngine.Segment.Static, {"\">\n\n", []}},
     {UndeadEngine.Segment.Dynamic, {{:a, [line: 6], nil}, [line: 6]}},
