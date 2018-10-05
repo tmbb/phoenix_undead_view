@@ -22,17 +22,17 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     [acc]
   end
 
-  def optimize_inside_undead_template(
-        {UndeadEngine.Segment.UndeadTemplate, {_segments, _meta}} = segment
+  def optimize_inside_undead_containter(
+        {UndeadEngine.Segment.UndeadContainer, {_segments, _meta}} = segment
       ) do
-    {UndeadEngine.Segment.UndeadTemplate, {optimized_segments, _meta}} = optimize_expr(segment)
+    {UndeadEngine.Segment.UndeadContainer, {optimized_segments, _meta}} = optimize_expr(segment)
 
     optimized_segments
     |> List.flatten()
     |> merge_segments()
   end
 
-  def optimize_inside_undead_template(expr) do
+  def optimize_inside_undead_containter(expr) do
     optimize_expr(expr)
   end
 
@@ -42,14 +42,14 @@ defmodule PhoenixUndeadView.Template.Optimizer do
         {outer_tag, {{inner_tag, {_segments, _inner_meta}} = undead_template, _outer_meta}}
       )
       when outer_tag == UndeadEngine.Segment.Dynamic and
-             inner_tag == UndeadEngine.Segment.UndeadTemplate do
+             inner_tag == UndeadEngine.Segment.UndeadContainer do
     {_tag, {optimized_segments, _meta}} = optimize_expr(undead_template)
 
     optimized_segments
   end
 
-  def optimize_expr({UndeadEngine.Segment.UndeadTemplate = tag, {segments, meta}}) do
-    non_optimized_segments = for segment <- segments, do: optimize_inside_undead_template(segment)
+  def optimize_expr({UndeadEngine.Segment.UndeadContainer = tag, {segments, meta}}) do
+    non_optimized_segments = for segment <- segments, do: optimize_inside_undead_containter(segment)
 
     optimized_segments =
       non_optimized_segments
@@ -89,7 +89,7 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     Macro.prewalk(template, &Macro.expand(&1, env))
   end
 
-  def optimize({UndeadEngine.Segment.UndeadTemplate, {_, _}} = template, env) do
+  def optimize({UndeadEngine.Segment.UndeadContainer, {_, _}} = template, env) do
     expanded = macroexpand_template(template, env)
     optimize_expr(expanded)
   end

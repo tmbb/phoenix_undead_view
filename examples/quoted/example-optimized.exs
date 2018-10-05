@@ -1,4 +1,4 @@
-{UndeadEngine.Segment.UndeadTemplate,
+{UndeadEngine.Segment.UndeadContainer,
  {[
     {UndeadEngine.Segment.DynamicNoOutput,
      {{:=, [line: 1], [{:a, [line: 1], nil}, 2]}, [line: 1]}},

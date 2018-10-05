@@ -13,7 +13,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
 
   @doc false
   def init(_opts) do
-    {UndeadEngine.Segment.UndeadTemplate, {[], []}}
+    {UndeadEngine.Segment.UndeadContainer, {[], []}}
   end
 
   @doc false

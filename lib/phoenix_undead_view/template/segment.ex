@@ -1,6 +1,6 @@
 defmodule PhoenixUndeadView.Template.Segment do
-  def undead_template(contents, meta \\ []) do
-    {UndeadEngine.Segment.UndeadTemplate, {contents, meta}}
+  def undead_containter(contents, meta \\ []) do
+    {UndeadEngine.Segment.UndeadContainer, {contents, meta}}
   end
 
   def static(contents, meta \\ []) do

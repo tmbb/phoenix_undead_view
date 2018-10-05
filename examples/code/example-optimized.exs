@@ -1,4 +1,4 @@
-{UndeadEngine.Segment.UndeadTemplate,
+{UndeadEngine.Segment.UndeadContainer,
  {[
     {UndeadEngine.Segment.DynamicNoOutput, {a = 2, [line: 1]}},
     {UndeadEngine.Segment.Static,

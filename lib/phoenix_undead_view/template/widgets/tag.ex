@@ -63,11 +63,11 @@ defmodule PhoenixUndeadView.Template.Widgets.Tag do
 
   defmacro tag(name, attrs) do
     segments = tag_segments(name, attrs, nil)
-    Segment.undead_template(segments)
+    Segment.undead_containter(segments)
   end
 
   defmacro tag(name, attrs, do: contents) do
     segments = tag_segments(name, attrs, contents)
-    Segment.undead_template(segments)
+    Segment.undead_containter(segments)
   end
 end
