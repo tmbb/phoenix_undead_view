@@ -1,2 +1,5 @@
 import_if_available PhoenixUndeadView.Template.Widgets.Tag
-alias PhoenixUndeadView.Template.{Segment, Optimizer}
+import_if_available PhoenixUndeadView.Template.InnerCompiler
+import_if_available PhoenixUndeadView.IExHelpers
+alias PhoenixUndeadView.Template.Optimizer
+require PhoenixUndeadView.Template.Segment, as: Segment

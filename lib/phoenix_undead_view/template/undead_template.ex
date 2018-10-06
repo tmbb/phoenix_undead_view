@@ -1,4 +1,4 @@
-defmodule PhoenixUndeadView.UndeadTemplate do
+defmodule PhoenixUndeadView.Template.UndeadTemplate do
   @moduledoc """
   Kinda of a palceholder; needs to be refactored.
   """

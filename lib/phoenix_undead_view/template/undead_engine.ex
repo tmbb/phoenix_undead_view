@@ -1,19 +1,13 @@
 defmodule PhoenixUndeadView.Template.UndeadEngine do
   @moduledoc false
 
-  # The code was shamelessly stolen from the `phoenix_html` package with only minor modifications.
-
-  # @anno (if :erlang.system_info(:otp_release) >= '19' do
-  #          [generated: true]
-  #        else
-  #          [line: -1]
-  #        end)
-
   use EEx.Engine
+
+  require PhoenixUndeadView.Template.Segment, as: Segment
 
   @doc false
   def init(_opts) do
-    {UndeadEngine.Segment.UndeadContainer, {[], []}}
+    Segment.undead_container([])
   end
 
   @doc false
@@ -34,7 +28,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
   end
 
   def handle_text({tag, {reversed_segments, meta}}, text) do
-    new_segment = {UndeadEngine.Segment.Static, {text, []}}
+    new_segment = Segment.static(text, [])
     {tag, {[new_segment | reversed_segments], meta}}
   end
 
@@ -42,7 +36,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
     line = line_from_expr(expr)
     expr = convert_assigns(expr)
 
-    new_segment = {UndeadEngine.Segment.Dynamic, {expr, [line: line]}}
+    new_segment = Segment.dynamic(expr, [line: line])
     new_segments = [new_segment | reversed_segments]
 
     {tag, {new_segments, meta}}
@@ -52,7 +46,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
     line = line_from_expr(expr)
     expr = convert_assigns(expr)
 
-    new_segment = {UndeadEngine.Segment.Fixed, {expr, [line: line]}}
+    new_segment = Segment.fixed(expr, [line: line])
     new_segments = [new_segment | reversed_segments]
 
     {tag, {new_segments, meta}}
@@ -62,7 +56,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
     line = line_from_expr(expr)
     expr = convert_assigns(expr)
 
-    new_segment = {UndeadEngine.Segment.DynamicNoOutput, {expr, [line: line]}}
+    new_segment = Segment.support(expr, [line: line])
     new_segments = [new_segment | reversed_segments]
 
     {tag, {new_segments, meta}}

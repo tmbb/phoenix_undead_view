@@ -41,13 +41,18 @@ defmodule Fixtures do
     """
 
     undead_template = UndeadEEx.compile_string(template, env: __ENV__)
-    expr = undead_template.raw
-    File.write!("examples/quoted/example-raw.exs", pp_quoted(expr))
-    File.write!("examples/code/example-raw.exs", pp_as_code(expr))
 
-    optimized = undead_template.full
-    File.write!("examples/quoted/example-optimized.exs", pp_quoted(optimized))
-    File.write!("examples/code/example-optimized.exs", pp_as_code(optimized))
+    data = [
+      {"raw", undead_template.raw},
+      {"full", undead_template.full},
+      {"dynamic", undead_template.dynamic},
+      {"static", undead_template.static}
+    ]
+
+    for {name, quoted} <- data do
+      File.write!("examples/quoted/example-#{name}.exs", pp_quoted(quoted))
+      File.write!("examples/code/example-#{name}.exs", pp_as_code(quoted))
+    end
 
     :ok
   end

@@ -3,7 +3,8 @@ defmodule PhoenixUndeadView.Template.Widgets.Tag do
   A widget to render an HTML tag
   """
   import PhoenixUndeadView.Template.Guards
-  alias PhoenixUndeadView.Template.{HTML, Segment}
+  alias PhoenixUndeadView.Template.HTML
+  require PhoenixUndeadView.Template.Segment, as: Segment
   alias PhoenixUndeadView.Template.Widgets.Attributes
 
   def segments_for_tag_name(name) when is_static(name) do
@@ -63,11 +64,11 @@ defmodule PhoenixUndeadView.Template.Widgets.Tag do
 
   defmacro tag(name, attrs) do
     segments = tag_segments(name, attrs, nil)
-    Segment.undead_containter(segments)
+    Segment.undead_container(segments)
   end
 
   defmacro tag(name, attrs, do: contents) do
     segments = tag_segments(name, attrs, contents)
-    Segment.undead_containter(segments)
+    Segment.undead_container(segments)
   end
 end

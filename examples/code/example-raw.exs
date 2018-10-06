@@ -1,6 +1,6 @@
 {UndeadEngine.Segment.UndeadContainer,
  {[
-    {UndeadEngine.Segment.DynamicNoOutput, {a = 2, [line: 1]}},
+    {UndeadEngine.Segment.Support, {a = 2, [line: 1]}},
     {UndeadEngine.Segment.Static, {"\nBlah blah blah\n\n", []}},
     {UndeadEngine.Segment.Dynamic,
      {tag(:input,

@@ -4,6 +4,7 @@ defmodule PhoenixUndeadView.Template.Widgets.Attributes do
   """
   import PhoenixUndeadView.Template.Guards
   alias PhoenixUndeadView.Template.{Segment, HTML}
+  require Segment
 
   @type segment_tag() :: :static | :dynamic
 

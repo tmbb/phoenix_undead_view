@@ -16,7 +16,7 @@ The "datatype" of the intermediate EEx templates would be the following:
     # <%= ... %>
     {:dynamic, expr1},
     # <% ... %>
-    {:dynamic_no_output, expr2}
+    {:support, expr2}
     # <%| ... %>
     {:fixed, expr2}
     ...
