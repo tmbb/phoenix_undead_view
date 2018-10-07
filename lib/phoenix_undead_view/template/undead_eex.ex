@@ -1,11 +1,13 @@
 defmodule PhoenixUndeadView.Template.UndeadEEx do
   require EEx
+
   alias PhoenixUndeadView.Template.{
     Optimizer,
     Compiler,
     UndeadTemplate,
     UndeadEngine
   }
+
   alias PhoenixUndeadView.Template.UndeadTemplate
 
   def compile_string(text, opts) do

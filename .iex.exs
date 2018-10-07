@@ -1,4 +1,5 @@
 import_if_available PhoenixUndeadView.Template.Widgets.Tag
+import_if_available PhoenixUndeadView.Template.Widgets.Form
 import_if_available PhoenixUndeadView.Template.InnerCompiler
 import_if_available PhoenixUndeadView.IExHelpers
 alias PhoenixUndeadView.Template.Optimizer

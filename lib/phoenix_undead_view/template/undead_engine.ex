@@ -11,8 +11,8 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
   end
 
   @doc false
-  def handle_begin(state) do
-    state
+  def handle_begin(_state) do
+    Segment.undead_container([])
   end
 
   @doc false
@@ -36,7 +36,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
     line = line_from_expr(expr)
     expr = convert_assigns(expr)
 
-    new_segment = Segment.dynamic(expr, [line: line])
+    new_segment = Segment.dynamic(expr, line: line)
     new_segments = [new_segment | reversed_segments]
 
     {tag, {new_segments, meta}}
@@ -46,7 +46,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
     line = line_from_expr(expr)
     expr = convert_assigns(expr)
 
-    new_segment = Segment.fixed(expr, [line: line])
+    new_segment = Segment.fixed(expr, line: line)
     new_segments = [new_segment | reversed_segments]
 
     {tag, {new_segments, meta}}
@@ -56,7 +56,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
     line = line_from_expr(expr)
     expr = convert_assigns(expr)
 
-    new_segment = Segment.support(expr, [line: line])
+    new_segment = Segment.support(expr, line: line)
     new_segments = [new_segment | reversed_segments]
 
     {tag, {new_segments, meta}}

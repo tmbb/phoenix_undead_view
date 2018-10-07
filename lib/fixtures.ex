@@ -1,9 +1,8 @@
 defmodule Fixtures do
   alias PhoenixUndeadView.Template.UndeadEEx
-  import PhoenixUndeadView.Template.Widgets.Tag
+  # import PhoenixUndeadView.Template.Widgets.Form
+  import PhoenixUndeadView.Template.Widgets
   require EEx
-
-  _no_warning = tag(:x, [])
 
   @limit 100_000_000
 
@@ -33,7 +32,9 @@ defmodule Fixtures do
     <% a = 2 %>
     Blah blah blah
 
-    <%= tag(:input, [name: "user[name]", id: "user_name", value: @user.name]) %>
+    <%= form @changeset, action, [], fn f -> %>
+      <%= tag(:input, [name: "user[name]", id: "user_name", value: @user.name]) %>
+    <% end %>
 
     <%= a %>
 

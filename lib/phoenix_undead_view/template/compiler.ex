@@ -29,6 +29,7 @@ defmodule PhoenixUndeadView.Template.Compiler do
     for prepared <- prepared_segments,
         prepared.appears_in_body? == true do
       expr = compile_segment(prepared.segment)
+
       if is_nil(prepared.variable) do
         expr
       else

@@ -1,9 +1,16 @@
 defmodule PhoenixUndeadView.Template.Widgets do
-  require PhoenixUndeadView.Template.Widgets.Tag, as: Tag
+  alias PhoenixUndeadView.Template.Widgets.Tag
+  alias PhoenixUndeadView.Template.Widgets.Form
 
   defmacro tag(name, attrs) do
-    quote do
-      Tag.tag(unquote(name), unquote(attrs))
-    end
+    Tag.make_tag(name, attrs)
+  end
+
+  defmacro tag(name, attrs, do: contents) do
+    Tag.make_tag(name, attrs, do: contents)
+  end
+
+  defmacro form(form_data, action, options, fun) do
+    Form.make_form(form_data, action, options, fun)
   end
 end
