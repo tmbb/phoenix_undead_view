@@ -1,8 +1,10 @@
 defmodule PhoenixUndeadView.Template.Widgets.Form do
   @moduledoc false
-  alias Phoenix.HTML.FormData
+  import PhoenixUndeadView.Template.Guards
   require PhoenixUndeadView.Template.Widgets.Tag, as: Tag
   require PhoenixUndeadView.Template.Segment, as: Segment
+  alias Phoenix.HTML.FormData
+  alias PhoenixUndeadView.Template.Widgets.Form.FormInputs
 
   defp validate_fun_arg({_name, _meta, context} = _var) when is_atom(context), do: true
 
@@ -33,19 +35,6 @@ defmodule PhoenixUndeadView.Template.Widgets.Form do
     hygienic_var = hygienize_var(arg)
     substituted_body = substitute(body, arg, hygienic_var)
 
-    {UndeadEngine.Segment.UndeadContainer,
-     {[
-        {UndeadEngine.Segment.UndeadContainer,
-         {[
-            {UndeadEngine.Segment.Static,
-             {"<input name=\"_csrf_token\" type=\"hidden\" value=\"", []}},
-            {UndeadEngine.Segment.Fixed,
-             {{{:., [], [Plug.CSRFProtection, :get_csrf_token_for]}, [],
-               [{:action, [line: 4], nil}]}, []}},
-            {UndeadEngine.Segment.Static, {"\">", []}}
-          ], []}}
-      ], []}}
-
     open_form = Tag.make_form_tag(action, options)
 
     hygienic_assignment =
@@ -65,5 +54,49 @@ defmodule PhoenixUndeadView.Template.Widgets.Form do
 
   defmacro form(form_data, action, options, fun) do
     make_form(form_data, action, options, fun)
+  end
+
+  defmacro number_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:number, form, field, opts)
+  end
+
+  defmacro email_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:email, form, field, opts)
+  end
+
+  defmacro password_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:password, form, field, opts)
+  end
+
+  defmacro url_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:url, form, field, opts)
+  end
+
+  defmacro search_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:search, form, field, opts)
+  end
+
+  defmacro telephone_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:telephone, form, field, opts)
+  end
+
+  defmacro color_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:color, form, field, opts)
+  end
+
+  defmacro range_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:range, form, field, opts)
+  end
+
+  defmacro date_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:date, form, field, opts)
+  end
+
+  defmacro datetime_local_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:datetime_local, form, field, opts)
+  end
+
+  defmacro text_input(form, field, opts \\ []) do
+    FormInputs.make_generic_input(:text, form, field, opts)
   end
 end

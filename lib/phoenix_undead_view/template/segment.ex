@@ -3,7 +3,7 @@ defmodule PhoenixUndeadView.Template.Segment do
   @static_tag UndeadEngine.Segment.Static
   @dynamic_tag UndeadEngine.Segment.Dynamic
   @support_tag UndeadEngine.Segment.Support
-  @fixed_tag UndeadEngine.Segment.Fixed
+  @fixed_tag UndeadEngine.Segment.Fixedw
 
   defguard is_segment(segment)
            when tuple_size(segment) == 2 and tuple_size(elem(segment, 1)) == 2 and

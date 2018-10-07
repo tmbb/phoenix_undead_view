@@ -2,12 +2,12 @@ defmodule PhoenixUndeadView.Template.Widgets.Tag do
   @moduledoc """
   A widget to render an HTML tag
   """
+  require PhoenixUndeadView.Template.Segment, as: Segment
+  import PhoenixUndeadView.Template.Guards
   import PhoenixUndeadView.Template.Guards
   alias PhoenixUndeadView.Template.HTML
-  require PhoenixUndeadView.Template.Segment, as: Segment
   alias PhoenixUndeadView.Template.Widgets.Attributes
   alias Plug.CSRFProtection
-  import PhoenixUndeadView.Template.Guards
 
   @csrf_param "_csrf_token"
   @method_param "_method"
@@ -42,27 +42,26 @@ defmodule PhoenixUndeadView.Template.Widgets.Tag do
           ]
       end
 
-    method_container = Segment.undead_container(method_segments)
+    {unicode_trick_input_tag, opts} =
+      case Keyword.pop(opts, :enforce_utf8, true) do
+        false ->
+          {[], opts}
 
-    # {opts, extra} =
-    #   case Keyword.pop(opts, :enforce_utf8, true) do
-    #     {false, opts} ->
-    #       {opts, extra}
+        {true, opts} ->
+          input_tag = make_tag(:input, name: "_utf8", hidden: "hidden", value: "✓")
+          {input_tag, Keyword.put_new(opts, :accept_charset, "UTF-8")}
+      end
 
-    #     {true, opts} ->
-    #       {Keyword.put_new(opts, :accept_charset, "UTF-8"),
-    #        extra <> ~s'<input name="_utf8" type="hidden" value="✓">'}
-    #   end
-
-    # opts =
-    #   case Keyword.pop(opts, :multipart, false) do
-    #     {false, opts} -> opts
-    #     {true, opts} -> Keyword.put(opts, :enctype, "multipart/form-data")
-    #   end
+    opts =
+      case Keyword.pop(opts, :multipart, false) do
+        {false, opts} -> opts
+        {true, opts} -> Keyword.put(opts, :enctype, "multipart/form-data")
+      end
 
     Segment.undead_container([
       make_tag(:form, [action: action] ++ opts),
-      method_container
+      Segment.undead_container(method_segments),
+      unicode_trick_input_tag
     ])
   end
 

@@ -22,39 +22,19 @@
                 {[
                    {UndeadEngine.Segment.Static, {"\n  ", []}},
                    {UndeadEngine.Segment.Dynamic,
-                    {{:tag, [line: 5],
-                      [
-                        :input,
-                        [
-                          name: "user[name]",
-                          id: "user_name",
-                          value:
-                            {{:., [line: 5],
-                              [
-                                {:fetch_assign, [line: 5],
-                                 [
-                                   {:var!,
-                                    [
-                                      line: 5,
-                                      context: PhoenixUndeadView.Template.UndeadEngine,
-                                      import: Kernel
-                                    ],
-                                    [
-                                      {:assigns, [line: 5],
-                                       PhoenixUndeadView.Template.UndeadEngine}
-                                    ]},
-                                   :user
-                                 ]},
-                                :name
-                              ]}, [line: 5], []}
-                        ]
-                      ]}, [line: 5]}},
+                    {{:text_input, [line: 5], [{:f, [line: 5], nil}, :name]}, [line: 5]}},
+                   {UndeadEngine.Segment.Static, {"\n  ", []}},
+                   {UndeadEngine.Segment.Dynamic,
+                    {{:text_input, [line: 6], [{:f, [line: 6], nil}, :surname]}, [line: 6]}},
+                   {UndeadEngine.Segment.Static, {"\n  ", []}},
+                   {UndeadEngine.Segment.Dynamic,
+                    {{:number_input, [line: 7], [{:f, [line: 7], nil}, :age]}, [line: 7]}},
                    {UndeadEngine.Segment.Static, {"\n", []}}
                  ], []}}
              ]}
           ]}
        ]}, [line: 4]}},
     {UndeadEngine.Segment.Static, {"\n\n", []}},
-    {UndeadEngine.Segment.Dynamic, {{:a, [line: 8], nil}, [line: 8]}},
+    {UndeadEngine.Segment.Dynamic, {{:a, [line: 10], nil}, [line: 10]}},
     {UndeadEngine.Segment.Static, {"\n\nBlah blah\n", []}}
   ], []}}

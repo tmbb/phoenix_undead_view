@@ -63,8 +63,18 @@ defmodule PhoenixUndeadView.Template.Compiler.PreparedSegment do
 
   def variable_for(Segment.support(), _cursor, _index), do: nil
 
-  def variable_for(segment, cursor, index) when Segment.is_segment(segment) do
-    var_name = String.to_atom("#{cursor}_#{index}")
+  def variable_for(Segment.dynamic(), cursor, index) do
+    var_name = String.to_atom("#{cursor}_#{index}_dynamic")
+    Macro.var(var_name, __MODULE__)
+  end
+
+  def variable_for(Segment.fixed(), cursor, index) do
+    var_name = String.to_atom("#{cursor}_#{index}_fixed")
+    Macro.var(var_name, __MODULE__)
+  end
+
+  def variable_for(Segment.undead_container(), cursor, index) do
+    var_name = String.to_atom("#{cursor}_#{index}_undead_container")
     Macro.var(var_name, __MODULE__)
   end
 

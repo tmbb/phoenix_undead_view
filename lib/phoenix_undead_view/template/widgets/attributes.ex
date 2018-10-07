@@ -42,18 +42,17 @@ defmodule PhoenixUndeadView.Template.Widgets.Attributes do
   @spec analyze_attribute(attr()) :: {{segment_tag(), attr_name()}, {segment_tag(), attr_value()}}
   def analyze_attribute({name, value} = _attribute) do
     analyzed_name =
-      if is_static(name) do
-        # Not to be confused with `Segment.static(name)`!
-        {:static, name}
-      else
-        {:dynamic, name}
+      case name do
+        name when is_static(name) -> {:static, name}
+        Segment.undead_container() -> {:undead_container, name}
+        name when is_dynamic(name) -> {:dynamic, name}
       end
 
     analyzed_value =
-      if is_static(value) do
-        {:static, value}
-      else
-        {:dynamic, value}
+      case value do
+        value when is_static(value) -> {:static, value}
+        Segment.undead_container() -> {:undead_container, value}
+        value when is_dynamic(value) -> {:dynamic, value}
       end
 
     {analyzed_name, analyzed_value}
@@ -69,7 +68,7 @@ defmodule PhoenixUndeadView.Template.Widgets.Attributes do
 
   def segments_for_attribute({{:static, name}, {:static, value}}) do
     binary = HTML.html_escape(name) <> ~s'="' <> HTML.html_escape(value) <> ~s'"'
-    Segment.static(binary)
+    [Segment.static(binary)]
   end
 
   def segments_for_attribute({{:static, name}, {:dynamic, value}}) do
@@ -78,6 +77,16 @@ defmodule PhoenixUndeadView.Template.Widgets.Attributes do
     [
       Segment.static(~s'#{escaped_name}="'),
       Segment.dynamic(quote(do: HTML.html_escape(unquote(value)))),
+      Segment.static(~s'"')
+    ]
+  end
+
+  def segments_for_attribute({{:static, name}, {:undead_container, value}}) do
+    escaped_name = HTML.html_escape(name)
+
+    [
+      Segment.static(~s'#{escaped_name}="'),
+      value,
       Segment.static(~s'"')
     ]
   end
@@ -97,6 +106,44 @@ defmodule PhoenixUndeadView.Template.Widgets.Attributes do
       Segment.dynamic(quote(do: HTML.html_escape(unquote(name)))),
       Segment.static(~s'="'),
       Segment.dynamic(quote(do: HTML.html_escape(unquote(value)))),
+      Segment.static(~s'"')
+    ]
+  end
+
+  # I doubt this will be used in practice...
+  def segments_for_attribute({{:dynamic, name}, {:undead_container, value}}) do
+    [
+      Segment.dynamic(quote(do: HTML.html_escape(unquote(name)))),
+      Segment.static(~s'="'),
+      value,
+      Segment.static(~s'"')
+    ]
+  end
+
+  def segments_for_attribute({{:undead_container, name}, {:static, value}}) do
+    escaped_value = ~s'="' <> HTML.html_escape(value) <> ~s'"'
+
+    [
+      name,
+      Segment.static(escaped_value)
+    ]
+  end
+
+  def segments_for_attribute({{:undead_container, name}, {:dynamic, value}}) do
+    [
+      name,
+      Segment.static(~s'="'),
+      Segment.dynamic(quote(do: HTML.html_escape(unquote(value)))),
+      Segment.static(~s'"')
+    ]
+  end
+
+  # I doubt this will be used in practice...
+  def segments_for_attribute({{:undead_container, name}, {:undead_container, value}}) do
+    [
+      name,
+      Segment.static(~s'="'),
+      value,
       Segment.static(~s'"')
     ]
   end

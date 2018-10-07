@@ -2,6 +2,7 @@ defmodule Fixtures do
   alias PhoenixUndeadView.Template.UndeadEEx
   # import PhoenixUndeadView.Template.Widgets.Form
   import PhoenixUndeadView.Template.Widgets
+  import PhoenixUndeadView.Template.Widgets.Form
   require EEx
 
   @limit 100_000_000
@@ -33,7 +34,9 @@ defmodule Fixtures do
     Blah blah blah
 
     <%= form @changeset, action, [], fn f -> %>
-      <%= tag(:input, [name: "user[name]", id: "user_name", value: @user.name]) %>
+      <%= text_input(f, :name) %>
+      <%= text_input(f, :surname) %>
+      <%= number_input(f, :age) %>
     <% end %>
 
     <%= a %>

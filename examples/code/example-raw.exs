@@ -7,16 +7,15 @@
         {UndeadEngine.Segment.UndeadContainer,
          {[
             {UndeadEngine.Segment.Static, {"\n  ", []}},
-            {UndeadEngine.Segment.Dynamic,
-             {tag(:input,
-                name: "user[name]",
-                id: "user_name",
-                value: fetch_assign(var!(assigns), :user).name()
-              ), [line: 5]}},
+            {UndeadEngine.Segment.Dynamic, {text_input(f, :name), [line: 5]}},
+            {UndeadEngine.Segment.Static, {"\n  ", []}},
+            {UndeadEngine.Segment.Dynamic, {text_input(f, :surname), [line: 6]}},
+            {UndeadEngine.Segment.Static, {"\n  ", []}},
+            {UndeadEngine.Segment.Dynamic, {number_input(f, :age), [line: 7]}},
             {UndeadEngine.Segment.Static, {"\n", []}}
           ], []}}
       end), [line: 4]}},
     {UndeadEngine.Segment.Static, {"\n\n", []}},
-    {UndeadEngine.Segment.Dynamic, {a, [line: 8]}},
+    {UndeadEngine.Segment.Dynamic, {a, [line: 10]}},
     {UndeadEngine.Segment.Static, {"\n\nBlah blah\n", []}}
   ], []}}
