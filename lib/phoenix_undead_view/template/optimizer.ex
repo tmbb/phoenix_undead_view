@@ -16,6 +16,13 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     merge_segments_helper(merged, rest)
   end
 
+  def merge_segments_helper(
+        Segment.static() = acc,
+        [Segment.support() = support_segment | rest]
+      ) do
+    [support_segment | merge_segments_helper(acc, rest)]
+  end
+
   def merge_segments_helper(current, [next | rest]) do
     [current | merge_segments_helper(next, rest)]
   end
@@ -91,42 +98,20 @@ defmodule PhoenixUndeadView.Template.Optimizer do
     optimize_expr(expanded)
   end
 
-  # # -------------------------------------------------------------
-  # # Groups have been commented out because they're not needed yet
-  # # -------------------------------------------------------------
-  #
-  # def segment_to_group(segment) do
-  #   group_type = group_type_for(segment)
-  #   {group_type, [], [segment]}
-  # end
-  #
-  # defp group_type_for({segment_type, _meta, _contents}) do
-  #   case segment_type do
-  #     UndeadEngine.Segment.Dynamic -> UndeadEngine.Group.Dynamic
-  #     UndeadEngine.Segment.DynamicNoResult -> UndeadEngine.Group.DynamicNoResult
-  #     UndeadEngine.Segment.Static -> UndeadEngine.Group.Fixed
-  #     UndeadEngine.Segment.Fixed -> UndeadEngine.Group.Fixed
-  #   end
-  # end
+  @spec merge_binaries(list()) :: list()
+  def merge_binaries([]), do: []
 
-  # def group_adjacent_segments([]), do: []
+  def merge_binaries([s | rest]), do: merge_binaries_helper(s, rest)
 
-  # def group_adjacent_segments([s | rest]),
-  #   do: group_adjacent_segments_helper(segment_to_group(s), rest)
+  defp merge_binaries_helper(bin1, [bin2 | rest]) when is_binary(bin1) and is_binary(bin2) do
+    merge_binaries_helper(bin1 <> bin2, rest)
+  end
 
-  # def group_adjacent_segments_helper(
-  #       {group_type, meta, segments} = _current_group,
-  #       [current_segment | next_segments]
-  #     ) do
-  #   if group_type_for(current_segment) == group_type do
-  #     new_group_segments = [current_segment | segments]
-  #     new_current_group = {group_type, meta, new_group_segments}
-  #     group_adjacent_segments_helper(new_current_group, next_segments)
-  #   else
-  #     reversed_group_segments = :lists.reverse(segments)
-  #     reversed_current_group = {group_type, meta, reversed_group_segments}
-  #     next_group = segment_to_group(current_segment)
-  #     [reversed_current_group | group_adjacent_segments_helper(next_group, next_segments)]
-  #   end
-  # end
+  defp merge_binaries_helper(anything, [next | rest]) do
+    [anything | merge_binaries_helper(next, rest)]
+  end
+
+  defp merge_binaries_helper(anything, []) do
+    [anything]
+  end
 end

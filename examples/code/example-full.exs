@@ -1,7 +1,10 @@
+_ = assigns
+element_id = Integer.to_string(:rand.uniform(4_294_967_296), 32)
 a = 2
+fixed = a
 
-tmp_3_dynamic =
-  case(PhoenixUndeadView.Template.HTML.html_escape(action)) do
+tmp_4_fixed =
+  case(fixed) do
     {:safe, data} ->
       data
 
@@ -12,94 +15,28 @@ tmp_3_dynamic =
       Phoenix.HTML.Safe.to_iodata(other)
   end
 
-tmp_5_fixed =
-  case(Plug.CSRFProtection.get_csrf_token_for(action)) do
-    {:safe, data} ->
-      data
+tmp_6_dynamic =
+  case(
+    case(a > 1) do
+      x when :erlang.orelse(:erlang."=:="(x, nil), :erlang."=:="(x, false)) ->
+        {:safe, ["\n  Nope\n"]}
 
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
+      _ ->
+        tmp_2_2_dynamic =
+          case(a) do
+            {:safe, data} ->
+              data
 
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
+            bin when is_binary(bin) ->
+              Plug.HTML.html_escape_to_iodata(bin)
 
-f = Phoenix.HTML.FormData.to_form(fetch_assign(assigns, :changeset), [])
+            other ->
+              Phoenix.HTML.Safe.to_iodata(other)
+          end
 
-tmp_9_fixed =
-  case(PhoenixUndeadView.Template.Widgets.Form.FormInputs.input_name_to_string(f)) do
-    {:safe, data} ->
-      data
-
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
-
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
-
-tmp_11_fixed =
-  case(PhoenixUndeadView.Template.Widgets.Form.FormInputs.input_name_to_string(f)) do
-    {:safe, data} ->
-      data
-
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
-
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
-
-tmp_13_fixed =
-  case(PhoenixUndeadView.Template.Widgets.Form.FormInputs.input_name_to_string(f)) do
-    {:safe, data} ->
-      data
-
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
-
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
-
-tmp_15_fixed =
-  case(PhoenixUndeadView.Template.Widgets.Form.FormInputs.input_name_to_string(f)) do
-    {:safe, data} ->
-      data
-
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
-
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
-
-tmp_17_fixed =
-  case(PhoenixUndeadView.Template.Widgets.Form.FormInputs.input_name_to_string(f)) do
-    {:safe, data} ->
-      data
-
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
-
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
-
-tmp_19_fixed =
-  case(PhoenixUndeadView.Template.Widgets.Form.FormInputs.input_name_to_string(f)) do
-    {:safe, data} ->
-      data
-
-    bin when is_binary(bin) ->
-      Plug.HTML.html_escape_to_iodata(bin)
-
-    other ->
-      Phoenix.HTML.Safe.to_iodata(other)
-  end
-
-tmp_21_dynamic =
-  case(a) do
+        {:safe, ["\n  ", tmp_2_2_dynamic, "\n"]}
+    end
+  ) do
     {:safe, data} ->
       data
 
@@ -112,24 +49,15 @@ tmp_21_dynamic =
 
 {:safe,
  [
-   "\nBlah blah blah\n\n<form action=\"",
-   tmp_3_dynamic,
-   "\" accept_charset=\"UTF-8\"><input name=\"_csrf_token\" type=\"hidden\" value=\"",
-   tmp_5_fixed,
-   "\"><input name=\"_utf8\" hidden=\"hidden\" value=\"✓\">",
-   "\n  <input name=\"",
-   tmp_9_fixed,
-   "[name]\" id=\"",
-   tmp_11_fixed,
-   "_name\" type=\"text\">\n  <input name=\"",
-   tmp_13_fixed,
-   "[surname]\" id=\"",
-   tmp_15_fixed,
-   "_surname\" type=\"text\">\n  <input name=\"",
-   tmp_17_fixed,
-   "[age]\" id=\"",
-   tmp_19_fixed,
-   "_age\" type=\"number\">\n</form>\n\n",
-   tmp_21_dynamic,
-   "\n\nBlah blah\n"
+   "<span id=\"",
+   element_id,
+   "\">\n\nStatic part #1\n\n",
+   tmp_4_fixed,
+   "\n\n",
+   tmp_6_dynamic,
+   "\n\nStatic part #2\n</span>\n\n<script type=\"application/json\" undead-id=\"",
+   element_id,
+   "\">\n[\n  \"\",\n  \"\\n\\nStatic part #1\\n\\n",
+   Phoenix.HTML.escape_javascript(tmp_4_fixed),
+   "\\n\\n\",\n  \"\\n\\nStatic part #2\\n\"\n]\n</script>"
  ]}

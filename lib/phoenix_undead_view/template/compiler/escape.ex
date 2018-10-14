@@ -7,8 +7,18 @@ defmodule PhoenixUndeadView.Template.Compiler.Escape do
            [line: -1]
          end)
 
-  def to_safe({:safe, value}, line) do
-    to_safe(value, line)
+  def escape_json(literal) when is_binary(literal) do
+    Phoenix.HTML.escape_javascript(literal)
+  end
+
+  def escape_json(expr) do
+    quote do
+      Phoenix.HTML.escape_javascript(unquote(expr))
+    end
+  end
+
+  def to_safe({:safe, expr}, line) do
+    quote line: line, do: unquote(expr)
   end
 
   def to_safe(literal, _line)

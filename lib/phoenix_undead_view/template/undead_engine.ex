@@ -71,7 +71,7 @@ defmodule PhoenixUndeadView.Template.UndeadEngine do
 
   defp handle_assign({:@, meta, [{name, _, atom}]}) when is_atom(name) and is_atom(atom) do
     quote line: meta[:line] || 0 do
-      fetch_assign(var!(assigns), unquote(name))
+      PhoenixUndeadView.Template.UndeadEngine.fetch_assign(var!(assigns), unquote(name))
     end
   end
 

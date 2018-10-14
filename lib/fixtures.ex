@@ -24,25 +24,32 @@ defmodule Fixtures do
     |> Code.format_string!()
   end
 
-  defmacro f(x) do
-    x
+  template = """
+  <% a = 2 %>
+  <% fixed = a %>
+  Static part #1
+
+  <%/ fixed %>
+
+  <%= if a > 1 do %>
+    <%= a %>
+  <% else %>
+    Nope
+  <% end %>
+
+  Static part #2
+  """
+
+  @template template
+
+  undead_template = UndeadEEx.compile_string(template, env: __ENV__)
+
+  def render(assigns) do
+    unquote(undead_template.full)
   end
 
   def example() do
-    template = """
-    <% a = 2 %>
-    Blah blah blah
-
-    <%= form @changeset, action, [], fn f -> %>
-      <%= text_input(f, :name) %>
-      <%= text_input(f, :surname) %>
-      <%= number_input(f, :age) %>
-    <% end %>
-
-    <%= a %>
-
-    Blah blah
-    """
+    template = @template
 
     undead_template = UndeadEEx.compile_string(template, env: __ENV__)
 
